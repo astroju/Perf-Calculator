@@ -34,10 +34,25 @@ def valueWeight_15OffOff(value,weight):
 
     return fnc(weight,value)
 
-def rwyLength(value, headwind, slope):
+def rwyLength15OffOff(value, headwind, slope):
+
+    headwind_range_x = np.array([-10,-5,0,15,30])
+    val_range_y = np.array([0.0,0.5,1.0,2.0,3.0,4.0,5.0,5.5])
+
+    midvals = np.array(
+            #val
+        [[0.6, 1.2, 1.80, 3.0, 4.10, 5.2, 6.0, 6.00]
+        ,[0.3, 0.6, 1.40, 2.5, 3.55, 4.6, 5.8, 6.00]
+        ,[0.0, 0.5, 1.00, 2.0, 3.00, 4.0, 5.0, 5.50] #headwind
+        ,[0.0, 0.0, 0.75, 1.7, 2.60, 3.6, 4.5, 5.00]   
+        ,[0.0, 0.0, 0.50, 1.4, 2.10, 3.2, 4.1, 4.60]])
+
+    fnc = interpolate.RectBivariateSpline(headwind_range_x, val_range_y, midvals, kx = 1)
+
+    value = fnc(headwind,value)
+
     return 2000 + value * 1000
 
 
 def takeoff_flaps15_ecsOff_aiOff_weight(oat,alt,weight, headwind, slope):
-    return rwyLength( valueWeight_15OffOff( oatAltValue_15OffOff(oat, alt), weight), headwind, slope)
-
+    return rwyLength15OffOff( valueWeight_15OffOff( oatAltValue_15OffOff(oat, alt), weight), headwind, slope)
