@@ -26,9 +26,22 @@ def test_valueWeight_15OffOff_weight():
 
     plt.show()
 
-def main():
-    test_rwyLength()
-    test_valueWeight_15OffOff_weight()
+def test_rwyLength_15OffOff():
+    value_x = np.linspace(-10, 30, 60) # headwind
+    value_y = np.linspace(0, 6, 7) # value 
+
+    for i in value_y:
+        y = SF34.rwyLength(i,value_x,0)
+        plt.plot(value_x, y, label = f'value {i}')
+
+    plt.xlabel('headwind')
+    plt.ylabel('value')
+    plt.legend()
+    plt.show()
+
+def main():    
+    #test_valueWeight_15OffOff_weight()
+    test_rwyLength_15OffOff()
 
 if __name__ == '__main__':
     main()
